@@ -1,39 +1,62 @@
-## FCBI:
-	port FCBI filter( https://github.com/yoya/image.js/blob/master/fcbi.js ) to avisynth
+## Description
 
-### Version:
-	0.0.0
+Fast Curvature Based Interpolation. More info [here](http://blog.awm.jp/tags/fcbi/) (Japanese).
 
-### Usage:
-```
-	FCBI(clip, bool "ed", int "tm")
-```
-	clip: planar 8bit YUV(except YV411) only.
-	ed: use edge detection or not (default = false).
-	tm: threshold for edge detection (default = 30).
-	
-	When ed is set to false, tm will be ignored.
+This is a port of [FCBI filter](https://github.com/yoya/image.js/blob/master/fcbi.js) done by [chikuzen](https://github.com/chikuzen/FCBI) to AviSynth.
 
 ### Requirements:
-	- Windows Vista sp2 or later
-	- SSE2 capable CPU
-	- Avisynth 2.60 / Avisynth+MT r2085 or later
-	- Microsoft VisualC++ Redistributable Package 2015.
 
-### License:
-Copyright (c) 2016, OKA Motofumi <chikuzen.mo at gmail dot com>
+- AviSynth 2.60 / AviSynth+ 3.4 or later
 
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
+- Microsoft VisualC++ Redistributable Package 2022 (can be downloaded from [here](https://github.com/abbodi1406/vcredist/releases)) (Windows only)
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
+### Usage:
 
-### Source code:
-	https://github.com/chikuzen/FCBI/
+```
+FCBI(clip input, bool "ed", int "tm", int "opt")
+```
+
+### Parameters:
+
+- input\
+    A clip to process.\
+    Must be in YUV 8..16-bit planar format (except YV411).
+
+- ed\
+    Use edge detection.\
+    Default: False.
+
+- tm\
+    Threshold for edge detection.\
+    Must be between 0 and range_max.
+    Default: 30 * (2 ^ bit_depth - 1) / 255.
+
+- opt\
+    Sets which cpu optimizations to use.\
+    -1: Auto-detect.\
+    0: Use C++ code.\
+    1: Use SSE2 code.\
+    Default: -1.
+
+### Building:
+
+- Windows\
+    Use solution files.
+
+- Linux
+    ```
+    Requirements:
+        - Git
+        - C++17 compiler
+        - CMake >= 3.16
+    ```
+    ```
+    git clone https://github.com/Asd-g/AviSynth-FCBI && \
+    cd AviSynth-FCBI && \
+    mkdir build && \
+    cd build && \
+
+    cmake ..
+    make -j$(nproc)
+    sudo make install
+    ```
