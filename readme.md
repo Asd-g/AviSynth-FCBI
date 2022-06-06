@@ -28,7 +28,7 @@ FCBI(clip input, bool "ed", int "tm", int "opt")
 
 - tm\
     Threshold for edge detection.\
-    Must be between 0 and range_max.
+    Must be between 0 and range_max.\
     Default: 30 * (2 ^ bit_depth - 1) / 255.
 
 - opt\
