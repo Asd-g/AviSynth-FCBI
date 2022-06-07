@@ -211,8 +211,8 @@ FCBI::FCBI(PClip _c, bool _e, int _t, int opt, IScriptEnvironment* env)
         tm = (vi.ComponentSize() == 1) ? 30 : (30 * peak / 255);
     if (tm < 0 || tm > peak)
         env->ThrowError("FCBI: tm is out of range");
-    if (opt < -1 || opt > 3)
-        env->ThrowError("FCBI: opt must be between -1..3.");
+    if (opt < -1 || opt > 1)
+        env->ThrowError("FCBI: opt must be between -1..1.");
 
     const int iset{ instrset_detect() };
     if (opt == 1 && iset < 2)
