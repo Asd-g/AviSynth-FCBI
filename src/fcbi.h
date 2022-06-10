@@ -7,7 +7,7 @@
 
 class FCBI : public GenericVideoFilter
 {
-    const int tm;
+    int tm;
     VideoInfo vit;
     bool v8;
 
