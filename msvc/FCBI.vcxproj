@@ -79,9 +79,13 @@
   </PropertyGroup>
   <PropertyGroup Label="LLVM" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <UseLldLink>true</UseLldLink>
+    <UseLlvmLib>true</UseLlvmLib>
+    <UseLlvmRc>true</UseLlvmRc>
   </PropertyGroup>
   <PropertyGroup Label="LLVM" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <UseLldLink>true</UseLldLink>
+    <UseLlvmLib>true</UseLlvmLib>
+    <UseLlvmRc>true</UseLlvmRc>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
