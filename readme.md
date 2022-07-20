@@ -10,10 +10,16 @@ This is a port of [FCBI filter](https://github.com/yoya/image.js/blob/master/fcb
 
 - Microsoft VisualC++ Redistributable Package 2022 (can be downloaded from [here](https://github.com/abbodi1406/vcredist/releases)) (Windows only)
 
-### Usage:
+### AviSynth+ usage:
 
 ```
 FCBI(clip input, bool "ed", int "tm", int "opt")
+```
+
+### VapourSynth usage:
+
+```
+fcbi.FCBI(clip input, bint "ed", int "tm", int "opt")
 ```
 
 ### Parameters:
@@ -50,6 +56,14 @@ FCBI(clip input, bool "ed", int "tm", int "opt")
         - C++17 compiler
         - CMake >= 3.16
     ```
+
+    CMake options:
+
+    ```
+    -DBUILD_AVS_LIB=ON  # Build library for AviSynth+.
+    -DBUILD_VS_LIB=ON   # Build library for VapourSynth.
+    ```
+
     ```
     git clone https://github.com/Asd-g/AviSynth-FCBI && \
     cd AviSynth-FCBI && \

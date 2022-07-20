@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "fcbi.h"
 #include "VCL2/vectorclass.h"
 
@@ -6,7 +8,6 @@ void phase1_sse2(const uint8_t* srcp_, uint8_t* __restrict dstp_, int width, con
 {
     spitch /= sizeof(T);
     dpitch /= sizeof(T);
-    width /= sizeof(T);
     const T* srcp{ reinterpret_cast<const T*>(srcp_) };
     T* __restrict dstp{ reinterpret_cast<T*>(dstp_) };
 

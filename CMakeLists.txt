@@ -2,16 +2,43 @@ cmake_minimum_required(VERSION 3.16)
 
 project(libfcbi LANGUAGES CXX)
 
-add_library(fcbi SHARED
-    src/fcbi.cpp
+option(BUILD_AVS_LIB "Build library for AviSynth+" ON)
+option(BUILD_VS_LIB "Build library for VapourSynth" ON)
+
+message(STATUS "Build library for AviSynth - ${BUILD_AVS_LIB}")
+message(STATUS "Build library for VapourSynth - ${BUILD_VS_LIB}")
+
+set (sources
+    src/fcbi_c.cpp
     src/fcbi_sse2.cpp
     src/VCL2/instrset_detect.cpp
 )
 
-target_include_directories(fcbi PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    /usr/local/include/avisynth
-)
+if (BUILD_AVS_LIB)
+    set (sources
+        ${sources}
+        src/fcbi_avs.cpp
+    )
+endif()
+
+if (BUILD_VS_LIB)
+    set (sources
+        ${sources}
+        src/fcbi_vs.cpp
+    )
+endif()
+
+add_library(fcbi SHARED ${sources})
+
+target_include_directories(fcbi PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+if (BUILD_AVS_LIB)
+    target_include_directories(fcbi PRIVATE /usr/local/include/avisynth)
+endif()
+
+if (BUILD_VS_LIB)
+    target_include_directories(fcbi PRIVATE /usr/local/include/vapoursynth)
+endif()
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
@@ -44,7 +71,13 @@ endif ()
 
 include(GNUInstallDirs)
 
-INSTALL(TARGETS fcbi LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}/avisynth")
+if (BUILD_AVS_LIB)
+    INSTALL(TARGETS fcbi LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}/avisynth")
+endif()
+
+if (BUILD_VS_LIB)
+    INSTALL(TARGETS fcbi LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}/vapoursynth")
+endif()
 
 # uninstall target
 if(NOT TARGET uninstall)
